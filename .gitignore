@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #################
 ## Eclipse
 #################
@@ -221,6 +222,8 @@ pip-log.txt
 ## Unity
 #############
 
+=======
+>>>>>>> origin/master
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
