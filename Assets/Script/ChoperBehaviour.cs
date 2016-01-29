@@ -17,15 +17,15 @@ public class ChoperBehaviour : MonoBehaviour {
 	private bool levo;
 	private Kopter heliSkripta;
 
+
 	// Use this for initialization
 	void Start () {
 		heliSkripta = GetComponentInChildren<Kopter> ();
 		rigid = GetComponent<Rigidbody2D> ();
 		myTrans = transform;
 		levo = true;
-		myTrans = transform;
-		transformHelija = myTrans.GetChild (1);
-		transformSenke = myTrans.GetChild (0);
+		transformHelija = transform.GetChild (1);
+		transformSenke = transform.GetChild (0);
 		udaljenostOdSenke =  transformHelija.position.y - transformSenke.position.y;
 		rigid = GetComponent<Rigidbody2D> ();
 	}
@@ -57,8 +57,7 @@ public class ChoperBehaviour : MonoBehaviour {
 				transformHelija.Rotate (0f, 180f, 0f);
 			}	
 
+			//rigid.MovePosition(rigid.position + vektorPravca * brzinaPomeranja * 0.01f);
 			myTrans.Translate (vektorPravca * brzinaPomeranja * 0.01f);
-			//rigid.AddForce (vektorPravca * brzinaPomeranja);	
-		}
 	}
 }
