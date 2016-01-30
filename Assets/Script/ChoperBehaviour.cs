@@ -59,5 +59,7 @@ public class ChoperBehaviour : MonoBehaviour {
 
 			//rigid.MovePosition(rigid.position + vektorPravca * brzinaPomeranja * 0.01f);
 			myTrans.Translate (vektorPravca * brzinaPomeranja * 0.01f);
+		}
+
 	}
 }
