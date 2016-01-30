@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class GenerateFloors : MonoBehaviour {
-
+	
 	public int maximalnavisina = 10;
 	public int visina;
 	public GameObject sprat;
