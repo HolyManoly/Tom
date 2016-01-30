@@ -14,7 +14,7 @@ public class CheckDistance : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Vector3 se dodeljuje Transform promenljivama
+		//Transform svakog objekta se dodeljuje promenljivama
 		Transform pozicijahelikoptera;
 		pozicijahelikoptera = GameObject.Find("Helic").transform;
 		Transform pozicijaobjekta1; 
