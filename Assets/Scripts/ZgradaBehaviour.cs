@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveShadow : MonoBehaviour {
+public class ZgradaBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

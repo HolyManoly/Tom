@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Kopter : MonoBehaviour {
 	
 	private Rigidbody2D rigid;
 	public float jacinaSileNaGore;
-	public Animator elisaAnim;
 	public Animator kopterAnim;
 	public bool canMove;
 	
@@ -23,13 +21,11 @@ public class Kopter : MonoBehaviour {
 	
 	void zaustaviLet()
 	{
-		elisaAnim.SetTrigger ("stani");
 		kopterAnim.SetTrigger ("stani");
 	}
 	
 	void pokreniLet()
 	{
-		elisaAnim.SetTrigger ("kreni");
 		kopterAnim.SetTrigger ("kreni");
 	}
 	
