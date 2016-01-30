@@ -9,7 +9,7 @@ public class ChoperBehaviour : MonoBehaviour {
 	private Transform transformHelija;
 	private Transform transformSenke;
 	private Vector3 skalaSenke;
-	private float skalaSenkeFloat;`
+	private float skalaSenkeFloat;
 	private float horizontala;
 	private float vertikala;
 	private Vector2 vektorPravca;
@@ -21,13 +21,13 @@ public class ChoperBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		heliSkripta = GetComponentInChildren<Kopter> ();
-		rigid = GetComponent<Rigidbody2D> ();
+		//rigid = GetComponent<Rigidbody2D> ();
 		myTrans = transform;
 		levo = true;
 		transformHelija = transform.GetChild (1);
 		transformSenke = transform.GetChild (0);
 		udaljenostOdSenke =  transformHelija.position.y - transformSenke.position.y;
-		rigid = GetComponent<Rigidbody2D> ();
+		//rigid = GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
