@@ -6,7 +6,7 @@ public class ChoperBehaviour : MonoBehaviour {
 	private Rigidbody2D rigid;
 	private Transform myTrans;
 	private Transform transformHelija;
-	private Transform transformSenke;
+	private Transform transformSprajtaSenke;
 	private Vector3 skalaSenke;
 	private float skalaSenkeFloat;
 	private float horizontala;
@@ -20,9 +20,10 @@ public class ChoperBehaviour : MonoBehaviour {
 	public bool canGoRight;
 	public bool canGoLeft;
 	public static ChoperBehaviour instance;
+	public Animator animKoptera;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		instance = this;
 		canGoUp = true;
 		canGoDown = true;
@@ -33,24 +34,23 @@ public class ChoperBehaviour : MonoBehaviour {
 		myTrans = transform;
 		levo = true;
 		transformHelija = transform.GetChild (1);
-		transformSenke = transform.GetChild (0);
-		visinaKoptera =  transformHelija.position.y - transformSenke.position.y;
+		transformSprajtaSenke = transform.GetChild (0);
+		visinaKoptera =  transformHelija.position.y - transformSprajtaSenke.position.y;
 		rigid = GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		visinaKoptera = transformHelija.position.y - transformSenke.position.y;
+		visinaKoptera = transformHelija.position.y - transformSprajtaSenke.position.y;
 		// Kada je heli na senci udaljenost je 0.6f, maksimalna je 4f
-		skalaSenkeFloat = 1f - ((visinaKoptera - 0.6f) / 3.4f);
-		skalaSenkeFloat = Mathf.Max (skalaSenkeFloat, 0.1f);
+		skalaSenkeFloat = 1f - (((visinaKoptera - 0.6f) / 3.4f)/3);
+		skalaSenkeFloat = Mathf.Max (skalaSenkeFloat, 0.2f);
 		skalaSenke.x = skalaSenkeFloat;
 		skalaSenke.y = skalaSenkeFloat;
 		skalaSenke.z = skalaSenkeFloat;
-		transformSenke.localScale = skalaSenke;
+		transformSprajtaSenke.localScale = skalaSenke;
 
-		if (heliSkripta.canMove)
-		{
+		if (heliSkripta.canMove) {
 			horizontala = Input.GetAxis ("Horizontal");
 			vertikala = Input.GetAxis ("Vertical");
 			vektorPravca.x = horizontala;
@@ -59,9 +59,7 @@ public class ChoperBehaviour : MonoBehaviour {
 			if ((vektorPravca.x > 0) && (levo)) {
 				levo = false;
 				transformHelija.Rotate (0f, 180f, 0f);
-			}
-			else if ((vektorPravca.x < 0) && (!levo))
-			{
+			} else if ((vektorPravca.x < 0) && (!levo)) {
 				levo = true;
 				transformHelija.Rotate (0f, 180f, 0f);
 			}	
@@ -75,8 +73,17 @@ public class ChoperBehaviour : MonoBehaviour {
 			if ((vektorPravca.y < 0) && !canGoDown)
 				vektorPravca.y = 0;
 
+			if (vektorPravca.y > 0)
+				animKoptera.SetInteger ("vertikala", 1);
+			else if (vektorPravca.y < 0)
+				animKoptera.SetInteger ("vertikala", -1);
+			else
+				animKoptera.SetInteger ("vertikala", 0);
+			
 			//rigid.MovePosition(rigid.position + vektorPravca * brzinaPomeranja * 0.01f);
 			myTrans.Translate (vektorPravca * brzinaPomeranja * 0.01f);
+		} else {
+			animKoptera.SetInteger ("vertikala", 1);
 		}
 	}
 

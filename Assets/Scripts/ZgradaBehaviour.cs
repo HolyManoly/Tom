@@ -3,21 +3,21 @@
 public class ZgradaBehaviour : MonoBehaviour {
 
 	private SpriteRenderer[] rendaljkeSpratova;
-	private float vertikala;
-	private float horizontala;
 	private bool inRange;
 	private bool izaZgrade;
-	public Transform senka;
+	private Transform senka;
 	public string imePrednjegLejera;
 	public string imeZadnjegLejera;
 	public Sprite spratSolid;
 	public Sprite spratTransparent;
 	public Sprite krovSolid;
 	public Sprite krovTransparent;
+	public Sprite podnozjeTransparent;
 	public Transform prvaTackaLinije;
 	public Transform drugaTackaLinije;
 	private Vector3 vektorPodnozja;
 	private float ugao;
+	private PodnozjeZgradeBehaviour podnozje;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -27,42 +27,53 @@ public class ZgradaBehaviour : MonoBehaviour {
 	}
 
 	void Start () {
+		podnozje = GetComponentInChildren<PodnozjeZgradeBehaviour> ();
 		inRange = false;
 		rendaljkeSpratova = GetComponentsInChildren<SpriteRenderer> ();
-		//vertikala = transform.position.y;
-		vertikala = transform.GetChild (0).position.y;
-		horizontala = transform.GetChild (0).position.x;
 		vektorPodnozja = drugaTackaLinije.position - prvaTackaLinije.position;
+		senka = ChoperBehaviour.instance.gameObject.transform.GetChild (0);
 	}
 
 	void Update()
 	{
-
 		Debug.DrawLine (prvaTackaLinije.position, drugaTackaLinije.position);
 		if (inRange) {
-			if (izaZgrade) {
-				if (getAngle(senka.position) < 180f){
-					for (int i = 0; i < rendaljkeSpratova.Length; i++) {
-						rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
-						if (i != rendaljkeSpratova.Length - 1)
-							rendaljkeSpratova [i].sprite = spratSolid;
-						else
-							rendaljkeSpratova [i].sprite = krovSolid;
+			// Deo koji odredjuje lejer zgrade
+			if (!podnozje.iznadZgrade) {	// Ako je iznad zgrade onda bi uvek trebao da bude na lejeru ispred
+				if (izaZgrade) {
+					if (getAngle (senka.position) < 180f) {
+						for (int i = 0; i < rendaljkeSpratova.Length; i++) {
+							rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
+							if (i != rendaljkeSpratova.Length - 1)
+								rendaljkeSpratova [i].sprite = spratSolid;
+							else
+								rendaljkeSpratova [i].sprite = krovSolid;
+						}
+						izaZgrade = false;
 					}
-					izaZgrade = false;
+				} else {
+					if (getAngle (senka.position) > 180f) {
+						rendaljkeSpratova [0].sprite = podnozjeTransparent;
+						for (int i = 1; i < rendaljkeSpratova.Length; i++) {
+							rendaljkeSpratova [i].sortingLayerName = imePrednjegLejera;
+							if (i != rendaljkeSpratova.Length - 1)
+								rendaljkeSpratova [i].sprite = spratTransparent;
+							else
+								rendaljkeSpratova [i].sprite = krovTransparent;
+						}
+						izaZgrade = true;
+					}
 				}
 			} else {
-				if (getAngle(senka.position) > 180f){
-					for (int i = 0; i < rendaljkeSpratova.Length; i++) {
-						rendaljkeSpratova [i].sortingLayerName = imePrednjegLejera;
-						if (i != rendaljkeSpratova.Length - 1)
-							rendaljkeSpratova [i].sprite = spratTransparent;
-						else
-							rendaljkeSpratova [i].sprite = krovTransparent;
-					}
-					izaZgrade = true;
+				for (int i = 0; i < rendaljkeSpratova.Length; i++) {
+					rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
+					if (i != rendaljkeSpratova.Length - 1)
+						rendaljkeSpratova [i].sprite = spratSolid;
+					else
+						rendaljkeSpratova [i].sprite = krovSolid;
 				}
 			}
+
 		}
 	}
 		

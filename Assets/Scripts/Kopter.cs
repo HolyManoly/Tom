@@ -4,17 +4,21 @@ public class Kopter : MonoBehaviour {
 	
 	private Rigidbody2D rigid;
 	public float jacinaSileNaGore;
+	public float maxVisina;
 	public Animator kopterAnim;
 	public bool canMove;
-	
+	private ChoperBehaviour heliSenka;
+
 	// Use this for initialization
 	void Start () {
+		heliSenka = transform.parent.gameObject.GetComponent<ChoperBehaviour> ();
 		rigid = GetComponent<Rigidbody2D> ();
+		canMove = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.Space)) {
+		if ((Input.GetKey (KeyCode.Space)) && (heliSenka.visinaKoptera < maxVisina)) {
 			rigid.AddForce (Vector2.up * jacinaSileNaGore);
 		}
 	}

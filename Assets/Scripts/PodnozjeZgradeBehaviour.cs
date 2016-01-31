@@ -3,11 +3,16 @@
 public class PodnozjeZgradeBehaviour : MonoBehaviour {
 
 	private Vector2 udaljenost;
-	public float visinaZgrade = 1.6f; // Postaviti visinu u world unitima
+	public float visinaZgrade = 10f;
 	private EdgeCollider2D krovKolajder;
+	private bool inRange;
+	public bool iznadZgrade;
+	private Transform senka;
 
 	void Start()
 	{
+		visinaZgrade = 9.5f; // Namestiti kasnije da bude visina po spratovima
+		inRange = false;
 		krovKolajder = GetComponentInChildren<EdgeCollider2D> ();
 		krovKolajder.enabled = false;
 	}
@@ -15,7 +20,10 @@ public class PodnozjeZgradeBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "senka") {
-			udaljenost = (Vector2) (other.gameObject.transform.position - transform.position);
+			inRange = true;
+			senka = other.gameObject.transform;
+			krovKolajder.enabled = true;
+			udaljenost = (Vector2) (senka.position - transform.GetChild(0).position);
 			if (udaljenost.x > 0)
 				ChoperBehaviour.instance.canGoLeft = false;
 			if (udaljenost.x < 0)
@@ -32,28 +40,35 @@ public class PodnozjeZgradeBehaviour : MonoBehaviour {
 		if (other.gameObject.tag == "senka") {
 			ChoperBehaviour.instance.otpustiOdZgrade ();
 			krovKolajder.enabled = false;
+			inRange = false;
+			iznadZgrade = false;
 		}
 	}
 
-/*	void OnTriggerStay2D(Collider2D other)
+	void Update()
 	{
-		if (other.gameObject.tag == "senka") {
-			if (ChoperBehaviour.instance.visinaKoptera > visinaZgrade) {
-				ChoperBehaviour.instance.otpustiOdZgrade ();
-				krovKolajder.enabled = true;
-			} else {
-				udaljenost = (Vector2) (other.gameObject.transform.position - transform.position);
-				if (udaljenost.x > 0)
-					ChoperBehaviour.instance.canGoLeft = false;
-				if (udaljenost.x < 0)
-					ChoperBehaviour.instance.canGoRight = false;
-				if (udaljenost.y > 0)
-					ChoperBehaviour.instance.canGoDown = false;
-				if (udaljenost.y < 0)
-					ChoperBehaviour.instance.canGoUp = false;
-				krovKolajder.enabled = false;
+		if (!iznadZgrade) {
+			if (inRange) {
+				Debug.DrawLine ((Vector2)senka.position + new Vector2 (0f, 9f), 
+					(Vector2)senka.position + new Vector2 (0f, 9f) + Vector2.right);
+				if (ChoperBehaviour.instance.visinaKoptera > visinaZgrade) {
+					ChoperBehaviour.instance.otpustiOdZgrade ();
+					krovKolajder.enabled = true;
+					iznadZgrade = true;
+				} else {
+					udaljenost = (Vector2)(senka.position - transform.position);
+					if (udaljenost.x > 0)
+						ChoperBehaviour.instance.canGoLeft = false;
+					if (udaljenost.x < 0)
+						ChoperBehaviour.instance.canGoRight = false;
+					if (udaljenost.y > 0)
+						ChoperBehaviour.instance.canGoDown = false;
+					if (udaljenost.y < 0)
+						ChoperBehaviour.instance.canGoUp = false;
+					iznadZgrade = false;
+				}
 			}
 		}
-	}*/
+	}
 
 }
