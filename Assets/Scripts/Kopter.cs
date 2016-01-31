@@ -8,6 +8,7 @@ public class Kopter : MonoBehaviour {
 	public Animator kopterAnim;
 	public bool canMove;
 	private ChoperBehaviour heliSenka;
+	public Animator eksplozija;
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,8 @@ public class Kopter : MonoBehaviour {
 	
 	void OnCollisionExit2D(Collision2D coll) {
 		if (coll.gameObject.tag == "senka") {
+
+			//eksplozija.SetTrigger ("pucaj");
 			pokreniLet();
 			canMove = true;
 		}
@@ -43,6 +46,8 @@ public class Kopter : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "senka") {
+			if (rigid.velocity.y < -2.8f)
+				eksplozija.SetTrigger ("pucaj");
 			zaustaviLet ();
 			canMove = false;
 		}

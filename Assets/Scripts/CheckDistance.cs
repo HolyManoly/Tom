@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class CheckDistance : MonoBehaviour {
 
 	public Transform pozicijaHelikoptera;
-	public List<Transform> ciljeviLista;
+	public Transform parentCiljeva;
+	private List<Transform> ciljeviLista;
 	public RectTransform[] pokazivaci;
 	public float udaljenostPokazivacaOdCentra;
 	private string tekstGUI;
@@ -16,8 +17,10 @@ public class CheckDistance : MonoBehaviour {
 
 	void Start()
 	{
+		ciljeviLista = new List<Transform> ();
 		fromVector2 = new Vector2 (1f, 0f);
-		for (int i = 0; i < ciljeviLista.Count; i++) {
+		for (int i = 0; i < parentCiljeva.childCount; i++) {
+			ciljeviLista.Add (parentCiljeva.GetChild (i));
 		}
 	}
 
@@ -52,6 +55,16 @@ public class CheckDistance : MonoBehaviour {
 		if (ugaoPokazivaca > 360)
 			ugaoPokazivaca -= 360f;
 		return(ugaoPokazivaca);
+	}
+
+	public void ukloniCilj(Transform cilj)
+	{
+		for (int i = 0; i < ciljeviLista.Count; i++) {
+			if (ciljeviLista [i].GetInstanceID() == cilj.GetInstanceID()) {
+				ciljeviLista.Remove (cilj);
+			}
+		}
+		
 	}
 
 }
