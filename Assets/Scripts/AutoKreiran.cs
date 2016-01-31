@@ -15,11 +15,6 @@ public class AutoKreiran : MonoBehaviour {
 		InvokeRepeating("kreiraj", delay, delay);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	private void kreiraj()
 	{
 		Instantiate(automobil, new Vector3(0, 0, 0), Quaternion.identity);

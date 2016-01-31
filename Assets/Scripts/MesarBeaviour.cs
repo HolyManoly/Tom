@@ -19,13 +19,8 @@ public class MesarBeaviour : MonoBehaviour {
 			prosloFrejmova++;
 			if (prosloFrejmova > posleKolikoFrejmovaKrecePadanje) {
 				secetina.isKinematic = false;
-				Invoke ("unistiSalamu", 5f);
 			}
 		}
 	}
 
-	private void unistiSalamu()
-	{
-		Destroy (secetina.gameObject);
-	}
 }

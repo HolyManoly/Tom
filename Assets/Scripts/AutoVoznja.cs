@@ -2,16 +2,19 @@
 using System.Collections;
 
 public class AutoVoznja : MonoBehaviour {
+
 	public Sprite autoSprajt1;
 	public Sprite autoSprajt2;
 	public Sprite autoSprajt3;
 	public Sprite autoSprajt4;
-	public int randsee;
-	private Rigidbody2D karoserija;
-	AutoKreiran.Smer SmerKretanja;
+	private Transform myTrans;
+	public AutoKreiran.Smer SmerKretanja;
+	private float brzina;
+	private int speedMod;
 	// Use this for initialization
 	void Start () {
-		karoserija = GetComponent<Rigidbody2D>();
+		brzina = Random.Range (10f, 20f);
+		myTrans = transform;
 		switch((AutoKreiran.Smer)Random.Range(1, 4)) {
 		case AutoKreiran.Smer.gore: 
 			SmerKretanja = AutoKreiran.Smer.gore;
@@ -27,32 +30,27 @@ public class AutoVoznja : MonoBehaviour {
 			break;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void FixedUpdate () {
-		int speedMod = GetComponent<CarCollision>().SpeedModifier;
+		speedMod = GetComponent<CarCollision>().SpeedModifier;
 		switch(SmerKretanja){
 		case AutoKreiran.Smer.gore:
 			GetComponent<SpriteRenderer>().sprite = autoSprajt1;
-			karoserija.AddForce(Vector3.up * 10 * Time.deltaTime * speedMod);
-			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.up *brzina* Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.right * brzina* Time.deltaTime * speedMod);
 			break;
 		case AutoKreiran.Smer.desno:
 			GetComponent<SpriteRenderer>().sprite = autoSprajt2;
-			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.right * brzina * Time.deltaTime * speedMod);
 			break;
 		case AutoKreiran.Smer.dole:
 			GetComponent<SpriteRenderer>().sprite = autoSprajt3;
-			karoserija.AddForce(Vector3.down * 10 * Time.deltaTime * speedMod);
-			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.down * brzina * Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.left * brzina * Time.deltaTime * speedMod);
 			break;
 		case AutoKreiran.Smer.levo:
 			GetComponent<SpriteRenderer>().sprite = autoSprajt4;
-			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime * speedMod);
+			myTrans.Translate(Vector3.left * brzina * Time.deltaTime * speedMod);
 			break;
 		}
 	}

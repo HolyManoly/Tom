@@ -39,8 +39,6 @@ public class Kopter : MonoBehaviour {
 	
 	void OnCollisionExit2D(Collision2D coll) {
 		if (coll.gameObject.tag == "senka") {
-
-			//eksplozija.SetTrigger ("pucaj");
 			pokreniLet();
 			canMove = true;
 		}
@@ -51,9 +49,15 @@ public class Kopter : MonoBehaviour {
 			if (rigid.velocity.y < -2.8f) {
 				eksplozija.SetTrigger ("pucaj");
 				eksplozijaRendaljka.enabled = true;
+				Invoke ("main", 5f);
 			}zaustaviLet ();
 			canMove = false;
 			enabled = false;
 		}
+	}
+
+	private void main()
+	{
+		Application.LoadLevel (0);
 	}
 }

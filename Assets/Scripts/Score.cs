@@ -11,15 +11,14 @@ public class Score : MonoBehaviour {
     public bool GaveBalloon = false;
     public bool PassedAllClouds = false;
     public bool HasTea = false;
-    public bool StoppedThief = false;
     public bool ChoppedSalami = false;
 
     public bool Victory = false;
 
     void Update ()
     {
-        if (PassedAllHoops && GaveBalloon && PassedAllClouds && HasTea && StoppedThief && ChoppedSalami)
-            Victory = true;
+		if (PassedAllHoops && GaveBalloon && PassedAllClouds && HasTea && ChoppedSalami)
+			Application.LoadLevel (0);
 
         if (NumHoopsLeft == 0)
             PassedAllHoops = true;

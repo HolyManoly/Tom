@@ -81,7 +81,7 @@ public class ChoperBehaviour : MonoBehaviour {
 				animKoptera.SetInteger ("vertikala", 0);
 			
 			//rigid.MovePosition(rigid.position + vektorPravca * brzinaPomeranja * 0.01f);
-			myTrans.Translate (vektorPravca * brzinaPomeranja * 0.01f);
+			myTrans.Translate (vektorPravca * brzinaPomeranja * Time.deltaTime);
 		} else {
 			animKoptera.SetInteger ("vertikala", 1);
 		}

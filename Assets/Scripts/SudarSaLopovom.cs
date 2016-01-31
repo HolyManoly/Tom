@@ -16,7 +16,7 @@ public class SudarSaLopovom : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "helikopter") {
 			GetComponent<SpriteRenderer>().sprite = lopovuhvacen;
-            coll.GetComponent<Score>().StoppedThief = true;
+//            coll.GetComponent<Score>().StoppedThief = true;
             CheckDistance.instance.ukloniCilj(this.transform);
         }
 		

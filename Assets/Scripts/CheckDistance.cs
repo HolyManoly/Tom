@@ -24,11 +24,7 @@ public class CheckDistance : MonoBehaviour {
 
 	void Start()
 	{
-		ciljeviLista = new List<Transform> ();
 		fromVector2 = new Vector2 (1f, 0f);
-		for (int i = 0; i < parentCiljeva.childCount; i++) {
-			ciljeviLista.Add (parentCiljeva.GetChild (i));
-		}
 	}
 
 	// Update is called once per frame
