@@ -8,24 +8,22 @@ public class AutoVoznja : MonoBehaviour {
 	public Sprite autoSprajt4;
 	public int randsee;
 	private Rigidbody2D karoserija;
-	int spriteRandom;
+	AutoKreiran.Smer SmerKretanja;
 	// Use this for initialization
 	void Start () {
 		karoserija = GetComponent<Rigidbody2D>();
-		spriteRandom = Random.Range(1, 4);
-		spriteRandom = randsee;
-		switch(spriteRandom) {
+		switch((AutoKreiran.Smer)Random.Range(1, 4)) {
 		case 1: 
-			GetComponent<SpriteRenderer>().sprite = autoSprajt1;
+			SmerKretanja = AutoKreiran.Smer.gore;
 			break;
 		case 2: 
-			GetComponent<SpriteRenderer>().sprite = autoSprajt2;
+			SmerKretanja = AutoKreiran.Smer.desno;
 			break;
 		case 3: 
-			GetComponent<SpriteRenderer>().sprite = autoSprajt3;
+			SmerKretanja = AutoKreiran.Smer.dole;
 			break;
 		case 4: 
-			GetComponent<SpriteRenderer>().sprite = autoSprajt4;
+			SmerKretanja = AutoKreiran.Smer.levo;
 			break;
 		}
 	}
@@ -36,20 +34,25 @@ public class AutoVoznja : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		switch(spriteRandom){
-		case 1:
-			karoserija.AddForce(Vector3.up * 10 * Time.deltaTime);
-			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime);
+		int speedMod = GetComponent<CarCollision> ().SpeedModifier;
+		switch(SmerKretanja){
+		case AutoKreiran.Smer.gore:
+			GetComponent<SpriteRenderer>().sprite = autoSprajt1;
+			karoserija.AddForce(Vector3.up * 10 * Time.deltaTime * speedMod);
+			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime * speedMod);
 			break;
-		case 2:
-			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime);
+		case AutoKreiran.Smer.desno:
+			GetComponent<SpriteRenderer>().sprite = autoSprajt2;
+			karoserija.AddForce(Vector3.right * 10 * Time.deltaTime * speedMod);
 			break;
-		case 3:
-			karoserija.AddForce(Vector3.down * 10 * Time.deltaTime);
-			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime);
+		case AutoKreiran.Smer.dole:
+			GetComponent<SpriteRenderer>().sprite = autoSprajt3;
+			karoserija.AddForce(Vector3.down * 10 * Time.deltaTime * speedMod);
+			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime * speedMod);
 			break;
-		case 4:
-			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime);
+		case AutoKreiran.Smer.levo:
+			GetComponent<SpriteRenderer>().sprite = autoSprajt4;
+			karoserija.AddForce(Vector3.left * 10 * Time.deltaTime * speedMod);
 			break;
 		}
 	}
