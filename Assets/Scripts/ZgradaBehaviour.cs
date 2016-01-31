@@ -6,8 +6,6 @@ public class ZgradaBehaviour : MonoBehaviour {
 	private bool inRange;
 	private bool izaZgrade;
 	private Transform senka;
-	public string imePrednjegLejera;
-	public string imeZadnjegLejera;
 	public Sprite spratSolid;
 	public Sprite spratTransparent;
 	public Sprite krovSolid;
@@ -18,11 +16,13 @@ public class ZgradaBehaviour : MonoBehaviour {
 	private Vector3 vektorPodnozja;
 	private float ugao;
 	private PodnozjeZgradeBehaviour podnozje;
+	private SpriteRenderer[] rendaljkeHelija;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "helikopter") {
 			inRange = true;
+			rendaljkeHelija = other.gameObject.GetComponentsInChildren<SpriteRenderer> ();
 		}
 	}
 
@@ -42,8 +42,10 @@ public class ZgradaBehaviour : MonoBehaviour {
 			if (!podnozje.iznadZgrade) {	// Ako je iznad zgrade onda bi uvek trebao da bude na lejeru ispred
 				if (izaZgrade) {
 					if (getAngle (senka.position) < 180f) {
+						for (int i = 0; i < rendaljkeHelija.Length; i++) {
+							rendaljkeHelija [i].sortingLayerName = "izaZgrada";
+						}
 						for (int i = 0; i < rendaljkeSpratova.Length; i++) {
-							rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
 							if (i != rendaljkeSpratova.Length - 1)
 								rendaljkeSpratova [i].sprite = spratSolid;
 							else
@@ -53,9 +55,11 @@ public class ZgradaBehaviour : MonoBehaviour {
 					}
 				} else {
 					if (getAngle (senka.position) > 180f) {
+						for (int i = 0; i < rendaljkeHelija.Length; i++) {
+							rendaljkeHelija [i].sortingLayerName = "ispredZgrada";
+						}
 						rendaljkeSpratova [0].sprite = podnozjeTransparent;
 						for (int i = 1; i < rendaljkeSpratova.Length; i++) {
-							rendaljkeSpratova [i].sortingLayerName = imePrednjegLejera;
 							if (i != rendaljkeSpratova.Length - 1)
 								rendaljkeSpratova [i].sprite = spratTransparent;
 							else
@@ -66,7 +70,6 @@ public class ZgradaBehaviour : MonoBehaviour {
 				}
 			} else {
 				for (int i = 0; i < rendaljkeSpratova.Length; i++) {
-					rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
 					if (i != rendaljkeSpratova.Length - 1)
 						rendaljkeSpratova [i].sprite = spratSolid;
 					else
@@ -83,7 +86,6 @@ public class ZgradaBehaviour : MonoBehaviour {
 			inRange = false;
 			izaZgrade = false;
 			for (int i = 0; i < rendaljkeSpratova.Length; i++) {
-				rendaljkeSpratova [i].sortingLayerName = imeZadnjegLejera;
 				if (i != rendaljkeSpratova.Length - 1)
 					rendaljkeSpratova [i].sprite = spratSolid;
 				else
