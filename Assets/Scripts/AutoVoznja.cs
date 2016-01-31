@@ -13,16 +13,16 @@ public class AutoVoznja : MonoBehaviour {
 	void Start () {
 		karoserija = GetComponent<Rigidbody2D>();
 		switch((AutoKreiran.Smer)Random.Range(1, 4)) {
-		case 1: 
+		case AutoKreiran.Smer.gore: 
 			SmerKretanja = AutoKreiran.Smer.gore;
 			break;
-		case 2: 
+		case AutoKreiran.Smer.desno: 
 			SmerKretanja = AutoKreiran.Smer.desno;
 			break;
-		case 3: 
+		case AutoKreiran.Smer.dole: 
 			SmerKretanja = AutoKreiran.Smer.dole;
 			break;
-		case 4: 
+		case AutoKreiran.Smer.levo: 
 			SmerKretanja = AutoKreiran.Smer.levo;
 			break;
 		}
@@ -34,7 +34,7 @@ public class AutoVoznja : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		int speedMod = GetComponent<CarCollision> ().SpeedModifier;
+		int speedMod = GetComponent<CarCollision>().SpeedModifier;
 		switch(SmerKretanja){
 		case AutoKreiran.Smer.gore:
 			GetComponent<SpriteRenderer>().sprite = autoSprajt1;
