@@ -7,13 +7,15 @@ public class BallonCapture : MonoBehaviour {
     {
         if (col.tag == "helikopter")
         {
-            // dodaj u balon u inventar
+            col.GetComponent<Score>().HasBalloon = true;
+            CheckDistance.instance.ukloniCilj(this.transform);
             Destroy(this.gameObject);
         }
 
         if (col.tag == "elisa")
         {
             // balon puca
+            CheckDistance.instance.ukloniCilj(this.transform);
             Destroy(this.gameObject);
         }
     }

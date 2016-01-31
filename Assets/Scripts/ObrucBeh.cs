@@ -39,16 +39,21 @@ public class ObrucBeh : MonoBehaviour {
 			unutra = false;
 			if (other.gameObject.tag == "helikopter") {
 				if (other.transform.position.x > transform.position.x) {
-					if (sLeva)
-						print ("Uspeh");
-				} else {
-					if (!sLeva)
-						print ("Uspeh");
-				}
+                    if (sLeva)
+                    {
+                        other.GetComponent<Score>().NumHoopsLeft--;
+                        CheckDistance.instance.ukloniCilj(this.transform);
+                    }
+                } else {
+                    if (!sLeva)
+                    {
+                        other.GetComponent<Score>().NumHoopsLeft--;
+                        CheckDistance.instance.ukloniCilj(this.transform);
+                    }
+                }
 			}
 		}
 	}
-
 	
 	// Update is called once per frame
 	void Update () {

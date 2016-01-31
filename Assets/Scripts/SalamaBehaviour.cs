@@ -7,7 +7,8 @@ public class SalamaBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "elisa") {
-			radar.ukloniCilj (transform);			
+            other.GetComponentInParent<Score>().ChoppedSalami = true;
+			radar.ukloniCilj (transform);
 		}
 	}
 }

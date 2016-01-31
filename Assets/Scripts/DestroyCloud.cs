@@ -8,7 +8,8 @@ public class DestroyCloud : MonoBehaviour {
         if (col.tag == "helikopter")
         {
             // animacija
-            // dodaj u brojac u skriptu
+            col.GetComponent<Score>().NumCloudsLeft--;
+            CheckDistance.instance.ukloniCilj(this.transform);
             Destroy(this.gameObject);
         }
     }

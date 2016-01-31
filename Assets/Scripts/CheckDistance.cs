@@ -6,7 +6,7 @@ public class CheckDistance : MonoBehaviour {
 
 	public Transform pozicijaHelikoptera;
 	public Transform parentCiljeva;
-	private List<Transform> ciljeviLista;
+	public List<Transform> ciljeviLista;
 	public RectTransform[] pokazivaci;
 	public float udaljenostPokazivacaOdCentra;
 	private string tekstGUI;
