@@ -50,9 +50,10 @@ public class Kopter : MonoBehaviour {
 				eksplozija.SetTrigger ("pucaj");
 				eksplozijaRendaljka.enabled = true;
 				Invoke ("main", 5f);
-			}zaustaviLet ();
+				enabled = false;
+			}
+			zaustaviLet ();
 			canMove = false;
-			enabled = false;
 		}
 	}
 
