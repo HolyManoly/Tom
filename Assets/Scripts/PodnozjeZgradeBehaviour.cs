@@ -51,7 +51,7 @@ public class PodnozjeZgradeBehaviour : MonoBehaviour {
 			if (inRange) {
 				Debug.DrawLine ((Vector2)senka.position + new Vector2 (0f, 9f), 
 					(Vector2)senka.position + new Vector2 (0f, 9f) + Vector2.right);
-				if (ChoperBehaviour.instance.visinaKoptera > visinaZgrade) {
+				if ((ChoperBehaviour.instance.visinaKoptera > visinaZgrade) && (Vector2.Distance(senka.position, transform.GetChild(0).position) < 4f)) {
 					ChoperBehaviour.instance.otpustiOdZgrade ();
 					krovKolajder.enabled = true;
 					iznadZgrade = true;
